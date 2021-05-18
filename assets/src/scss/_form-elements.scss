@@ -1,0 +1,59 @@
+input,
+button,
+select,
+textarea,
+.form-control {
+	font-family: $font1;
+	line-height: normal;
+}
+
+button,
+input[type='submit'] {
+	@include transition;
+}
+
+.form-control {
+	@include border-radius(0px);
+	height: 40px;
+	border: none;
+	border: 1px solid #ccc;
+
+	&:focus {
+		border-color: #000;
+		outline: 0;
+		box-shadow: none;
+	}
+
+	&.wpcf7-not-valid {
+		border-color: red;
+
+		& + .wpcf7-not-valid-tip {
+			text-align: left;
+		}
+	}
+}
+
+textarea.form-control {
+	height: auto;
+}
+
+.form-group {
+	margin-bottom: 25px;
+}
+
+.the-button {
+	@include reset_button;
+	display: inline-block;
+	height: 40px;
+	line-height: 40px;
+	padding: 0px 20px;
+
+	color: $primary_color !important;
+	text-decoration: none !important;
+	background-color: #ccc;
+
+	&:hover {
+		background-color: #000;
+		color: #fff !important;
+	}
+}
