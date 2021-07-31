@@ -1,9 +1,18 @@
 <?php 
 declare(strict_types=1);
 namespace Core;
-use App\Config;
+
+use Core\Db;
 
 class Controller {
+  protected $db;
+
+  public function __construct()
+  {
+    $this->db = new Db();
+  }
+
+  
   public function render($view_file, $data = array(), $store = false, $master = '') {
     // inject some default data here
     $data['base_url'] = $this->base_url();
@@ -12,9 +21,12 @@ class Controller {
 
     ob_start();
 
-    if(!empty($master) && file_exists(__DIR__.'/../App/views/'.$master)){
+
+    if(!empty($master) && file_exists($master)){
       // check if master template provider
-      $content = file_get_contents(__DIR__.'/../App/views/'.$master);
+      ob_start();
+      include($master);
+      $content = ob_get_clean();
 
       $content = str_replace('{{ meta_tags }}', @$data['meta_tags'], $content);
 
@@ -26,11 +38,11 @@ class Controller {
       ob_start();
       if(is_array($view_file)){
         foreach($view_file as $the_view_file){
-          include(__DIR__ ."/../App/views/".$the_view_file);
+          include($the_view_file);
         }
       }
       else{
-        include(__DIR__ ."/../App/views/".$view_file);
+        include($view_file);
       }
       $view_content = ob_get_clean();
 
@@ -45,11 +57,11 @@ class Controller {
       // without master template
       if(is_array($view_file)){
         foreach($view_file as $the_view_file){
-          include(__DIR__ ."/../App/views/".$the_view_file);
+          include($the_view_file);
         }
       }
       else{
-        include(__DIR__ ."/../App/views/".$view_file);
+        include($view_file);
       }
     }
 
@@ -61,7 +73,7 @@ class Controller {
   }
 
   public function base_url(){
-    return Config::BASE_URL;
+    return $_ENV['BASE_URL'];
   }
 }
 

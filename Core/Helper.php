@@ -46,4 +46,20 @@ class Helper{
     $extension = end(explode(".", $file));
     return $extension ? $extension : false;
   }
+
+  // Return JSON response
+  public static function response_json($json_data, $response_code = 200){
+    http_response_code($response_code);
+    header('Content-Type: application/json');
+    echo json_encode($json_data);
+    exit;
+  }
+
+  // Return Text response
+  public static function response_text($text_data, $response_code = 200){
+    http_response_code($response_code);
+    header("Content-Type: text/plain");
+    echo $text_data;
+    exit;
+  }
 }

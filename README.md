@@ -1,6 +1,6 @@
 ## TO-DO
 
-- [x] Load all configs
+- [x] Load all configs using .env fiel
 - [x] Connect DB
 - [x] Start Session
 - [x] Controller
@@ -12,6 +12,7 @@
 - [ ] Email
 - [ ] File upload
 - [ ] Image manipulation
+- [ ] Make controller methods available inside view files
 
 ## .htaccess Code
 
@@ -35,6 +36,9 @@ RewriteEngine On
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^(.\*)$ index.php?route=/$1 [L,QSA]
+
+# Disable directory listing
+Options -Indexes
 ```
 
 ## Routes Usage

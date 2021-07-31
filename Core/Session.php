@@ -3,18 +3,21 @@ declare(strict_types=1);
 namespace Core;
 
 class Session{
-  // Start session automatically on creating object
-  public function __construct(){
-    session_start();
-  }
-
   // Set session value
-  public function set($key, $value){
+  public static function set($key, $value){
+    if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+    }
+
     return $_SESSION[$key] = $value;
   }
 
   // Get session value
-  public function get($key){
+  public static function get($key){
+    if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+    }
+
     if(isset($_SESSION[$key])){
       return $_SESSION[$key];
     }
@@ -24,12 +27,20 @@ class Session{
   }
 
   // Delete session value
-  public function delete($key){
+  public static function delete($key){
+    if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+    }
+
     unset($_SESSION[$key]);
   }
 
   // Destroy all sessions 
-  public function destroy(){
+  public static function destroy(){
+    if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+    }
+    
     session_destroy();
   }
 }
@@ -39,13 +50,13 @@ class Session{
 
 $session = new \Core\Session;
 
-$session->set('user_id', $id);
+$session::set('user_id', $id);
 
-echo $session->get('user_id');
+echo $session::get('user_id');
 
-$session->delete('user_id');
+$session::delete('user_id');
 
-$session->destroy();
+$session::destroy();
 
 */
 ?>

@@ -3,6 +3,8 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 class PagesController extends \Core\Controller{
+  protected $views_dir = __DIR__ ."/../views/";
+  
   public function index(){
     $data = array(
       'page_title' => 'Home Page',
@@ -11,8 +13,9 @@ class PagesController extends \Core\Controller{
       'js_files' => 'js files ...',
       'name' => 'Aslam',
     );
-   
-    $this->render("index.php", $data, false, 'master.php');
+
+    
+    $this->render($this->views_dir."/index.php", $data, false, $this->views_dir."/master.php");
   }
   
   public function about(){

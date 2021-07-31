@@ -10,7 +10,12 @@ class Db {
   public $query_count = 0;
 
   // Connect to db on creating an object
-  public function __construct($dbhost = 'localhost', $dbuser = 'root', $dbpass = '', $dbname = '', $charset = 'utf8') {
+  public function __construct($dbhost="", $dbuser="", $dbpass="", $dbname="", $charset = 'utf8') {
+    $dbhost = empty($dbhost) ? $_ENV['DB_HOST'] : $dbhost;
+    $dbuser = empty($dbuser) ? $_ENV['DB_USER'] : $dbuser;
+    $dbpass = empty($dbpass) ? $_ENV['DB_PASS'] : $dbpass;
+    $dbname = empty($dbname) ? $_ENV['DB_NAME'] : $dbname;
+    
     $this->connection = new \mysqli($dbhost, $dbuser, $dbpass, $dbname);
     if ($this->connection->connect_error) {
       $this->error('Failed to connect to MySQL - ' . $this->connection->connect_error);
@@ -140,8 +145,7 @@ class Db {
 
 /*
 // Connect to Database:
-use Core\Config;
-$db = new \Core\Db(Config::$DB_HOST, Config::$DB_USER, Config::$DB_PASS, Config::$DB_NAME);
+$db = new \Core\Db($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);
 
 
 // Fetch a record from a database:
